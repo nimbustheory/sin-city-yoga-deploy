@@ -1,0 +1,16 @@
+export default {
+  studioName: "SIN CITY",
+  studioSubtitle: "Yoga Studio App",
+  logoMark: "SC",
+  accentColor: "hsl(338,72%,52%)",
+  accentLight: "hsl(338,72%,82%)",
+  accentGhost: "hsla(338,72%,52%,0.08)",
+  textDark: "#2a1f2e",
+  textMuted: "#7a6a80",
+  displayFont: "Playfair Display",
+  classCount: "30+",
+  teacherCount: "6",
+  yearFounded: "2012",
+  neighborhood: "Arts District",
+  city: "Las Vegas",
+};
