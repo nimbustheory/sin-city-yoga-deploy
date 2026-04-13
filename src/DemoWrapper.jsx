@@ -4,7 +4,7 @@ import config from "./demo.config";
 import {
   CalendarCheck, Flame, MessageCircle, UserCircle, CreditCard,
   CalendarDays, BellRing, BarChart3, Shield, Sparkles, MapPin,
-  ChevronRight, ExternalLink
+  ExternalLink
 } from "lucide-react";
 
 const S = {
@@ -48,25 +48,16 @@ const salesCards = [
 export default function DemoWrapper() {
   const [isAdmin, setIsAdmin] = useState(false);
 
-  if (isAdmin) {
-    return (
-      <div style={{ width: "100vw", height: "100vh", overflow: "hidden" }}>
-        <App onAdminChange={(admin) => setIsAdmin(admin)} />
-        <style>{`
-          * { scrollbar-width: none; }
-          *::-webkit-scrollbar { display: none; }
-        `}</style>
-      </div>
-    );
-  }
-
   return (
-    <div style={{ display: "flex", height: "100vh", overflow: "hidden", background: "#f5f3f0" }}>
-      {/* LEFT SIDEBAR */}
+    <div style={{
+      display: "flex", height: "100vh", overflow: "hidden",
+      background: isAdmin ? "#140f1a" : "#f5f3f0",
+    }}>
+      {/* LEFT SIDEBAR - hidden in admin */}
       <aside
         style={{
           width: 320, flexShrink: 0, padding: "32px 28px", overflowY: "auto",
-          display: "flex", flexDirection: "column", gap: 20,
+          display: isAdmin ? "none" : "flex", flexDirection: "column", gap: 20,
           borderRight: "1px solid #e8e4df",
         }}
         className="demo-sidebar-left"
@@ -114,28 +105,35 @@ export default function DemoWrapper() {
         </p>
       </aside>
 
-      {/* CENTER -- PHONE FRAME */}
+      {/* CENTER - phone frame when consumer, full width when admin */}
       <div style={{
-        flex: 1, display: "flex", alignItems: "stretch", justifyContent: "center",
-        padding: "0", overflow: "hidden", background: "#eae6e1",
-        minWidth: 420,
+        flex: 1, display: "flex", alignItems: "stretch",
+        justifyContent: isAdmin ? "stretch" : "center",
+        padding: 0, overflow: "hidden",
+        background: isAdmin ? "#140f1a" : "#eae6e1",
+        minWidth: isAdmin ? undefined : 420,
       }}>
         <div style={{
-          width: 390, position: "relative",
-          background: "#fff",
-          boxShadow: "0 0 60px rgba(0,0,0,.12)",
+          width: isAdmin ? "100%" : 390,
+          position: "relative",
+          background: isAdmin ? "transparent" : "#fff",
+          boxShadow: isAdmin ? "none" : "0 0 60px rgba(0,0,0,.12)",
           display: "flex", flexDirection: "column",
           overflow: "hidden",
         }}>
-          <App onAdminChange={(admin) => setIsAdmin(admin)} />
+          <App
+            isAdmin={isAdmin}
+            onEnterAdmin={() => setIsAdmin(true)}
+            onExitAdmin={() => setIsAdmin(false)}
+          />
         </div>
       </div>
 
-      {/* RIGHT SIDEBAR */}
+      {/* RIGHT SIDEBAR - hidden in admin */}
       <aside
         style={{
           width: 340, flexShrink: 0, padding: "32px 28px", overflowY: "auto",
-          display: "flex", flexDirection: "column", gap: 20,
+          display: isAdmin ? "none" : "flex", flexDirection: "column", gap: 20,
           borderLeft: "1px solid #e8e4df",
         }}
         className="demo-sidebar-right"
